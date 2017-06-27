@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -17,6 +16,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -167,8 +167,11 @@ public class TimelineActivity extends AppCompatActivity {
             // Extract name value from result extras
             String name = data.getExtras().getString("name");
             int code = data.getExtras().getInt("code", 0);
-            // Toast the name to display temporarily on screen
-            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+            Tweet tweet = (Tweet) Parcels.unwrap(data.getParcelableExtra("tweet"));
+            tweets.add(0, tweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvTweets.scrollToPosition(0);
+
         }
     }
 }
