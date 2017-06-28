@@ -4,7 +4,9 @@
     <item
         android:id="@+id/miCompose"
         android:icon="@drawable/ic_compose"
+        android:onClick="onComposeAction"
         app:showAsAction="ifRoom"
+        android:tint="@color/white"
         android:title="Compose">
     </item>
 
