@@ -1,11 +1,13 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,8 +25,8 @@ import java.util.Locale;
 
 public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
-    private List<Tweet> mTweets;
-    Context context;
+    static List<Tweet> mTweets;
+    static Context context;
 
     // pass in the Tweets array in the constructor
     public TweetAdapter(List<Tweet> tweets) {
@@ -65,11 +67,12 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
     // create ViewHolder class
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView ivProfileImage;
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvTimestamp;
+        public ImageButton ibReply;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +83,25 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
+            ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
+            ibReply.setOnClickListener(this);
+        }
+
+        private final int REQUEST_CODE = 20;
+        @Override
+        public void onClick(View v) {
+            // gets item position
+            int position = getAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                // get the tweet at the position, this won't work if the class is static
+                Tweet tweet = mTweets.get(position);
+                // create intent for the new activity
+                Intent intent = new Intent(context, ComposeActivity.class);
+                intent.putExtra("screenName", tweet.user.screenName);
+                // show the activity
+                ((TimelineActivity)context).startActivityForResult(intent, REQUEST_CODE);
+            }
         }
     }
 
@@ -99,17 +121,5 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
         }
 
         return relativeDate;
-    }
-
-    // Clean all elements of the recycler
-    public void clear() {
-        mTweets.clear();
-        notifyDataSetChanged();
-    }
-
-    // Add a list of items -- change to type used
-    public void addAll(List<Tweet> list) {
-        mTweets.addAll(list);
-        notifyDataSetChanged();
     }
 }
