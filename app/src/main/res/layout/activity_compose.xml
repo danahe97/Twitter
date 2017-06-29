@@ -27,9 +27,17 @@
         android:id="@+id/btPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="post"
+        android:text="Post"
+        android:layout_above="@+id/pbLoading"
+        android:layout_alignParentEnd="true" />
+        android:text="Tweet" />
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:onClick="post"
-        android:text="Post" />
-        android:text="Tweet" />
+        android:layout_marginEnd="18dp" />
 </RelativeLayout>
