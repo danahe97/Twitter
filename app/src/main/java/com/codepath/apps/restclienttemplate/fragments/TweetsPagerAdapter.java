@@ -13,6 +13,7 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
 
     private String tabtitles[] = new String[] {"Home", "Mentions"};
     private Context context;
+    HomeTimelineFragment homeFrag = new HomeTimelineFragment();
 
     public TweetsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -30,7 +31,7 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new HomeTimelineFragment();
+            return homeFrag;
         }
         else if (position == 1) {
             return new MentionsTimelineFragment();
