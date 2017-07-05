@@ -16,6 +16,8 @@ public class Tweet{
     public long uid; // database ID for the tweet
     public User user;
     public String createdAt;
+    public long replyUser;
+    public String replyScreenName;
 
     public Tweet() {}
 
@@ -24,10 +26,11 @@ public class Tweet{
         Tweet tweet = new Tweet();
 
         // extract the values from JSON
-        tweet. body = jsonObject.getString("text");
+        tweet.body = jsonObject.getString("text");
         tweet.uid = jsonObject.getLong("id");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+        tweet.replyScreenName = jsonObject.getString("in_reply_to_screen_name");
         return tweet;
     }
 }

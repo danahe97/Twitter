@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="140"
-        >
+        android:layout_below="@+id/tvReplying"
+        android:layout_alignParentStart="true">
         <EditText
             android:id="@+id/etNewTweet"
             android:layout_width="wrap_content"
@@ -40,4 +41,24 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="18dp" />
+
+    <TextView
+        android:id="@+id/tvReplying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Replying to "
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tvReplyUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvReplying"
+        android:layout_toEndOf="@+id/tvReplying"
+        android:text="screenName"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:visibility="invisible" />
 </RelativeLayout>

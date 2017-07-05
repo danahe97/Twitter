@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -19,12 +20,31 @@ import cz.msebera.android.httpclient.Header;
 public class ComposeActivity extends AppCompatActivity {
 
     ProgressBar pb;
+    TextView tvreply;
+    TextView tvReplyUser;
+    EditText etNewTweet;
+    String replyName;
+    String replyUser;
+    Long replyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
         pb = (ProgressBar) findViewById(R.id.pbLoading);
+        tvreply = (TextView) findViewById(R.id.tvReplying);
+        tvReplyUser = (TextView) findViewById(R.id.tvReplyUser);
+        etNewTweet = (EditText) findViewById(R.id.etNewTweet);
+        Intent getI = getIntent();
+        replyName = getI.getStringExtra("replyName");
+        replyUser =getI.getStringExtra("replyScreenName");
+        replyID = getI.getLongExtra("replyID", -1);
+        if (replyID != -1) {
+            tvReplyUser.setText(replyName);
+            etNewTweet.setText("@" + replyUser);
+            tvreply.setVisibility(View.VISIBLE);
+            tvReplyUser.setVisibility(View.VISIBLE);
+        }
     }
 
     public void post(View view) {
@@ -32,7 +52,7 @@ public class ComposeActivity extends AppCompatActivity {
         TwitterClient client = new TwitterClient(this);
         final EditText newTweet = (EditText) findViewById(R.id.etNewTweet);
         String newTweetString = newTweet.getText().toString();
-        client.sendTweet(newTweetString, new JsonHttpResponseHandler() {
+        client.sendTweet(newTweetString, replyID, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {

@@ -25,12 +25,19 @@ import java.util.Locale;
 
 public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
-    static List<Tweet> mTweets;
-    static Context context;
+    List<Tweet> mTweets;
+    Context context;
+    private TweetAdapterListener mListener;
+
+    // define an interface required by the viewholder
+    public interface TweetAdapterListener {
+        public void onItemSelected (View view, int position);
+    }
 
     // pass in the Tweets array in the constructor
-    public TweetAdapter(List<Tweet> tweets) {
+    public TweetAdapter(List<Tweet> tweets, TweetAdapterListener listener) {
         mTweets = tweets;
+        mListener = listener;
     }
 
     // for each row, inflate the layout and cache references into ViewHolder
@@ -56,7 +63,11 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
         holder.tvUsername.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
         holder.tvTimestamp.setText(getRelativeTimeAgo(tweet.createdAt));
-
+        if (tweet.replyScreenName != "null"){
+            holder.tvReplyUser.setText(tweet.replyScreenName);
+            holder.tvReply.setVisibility(View.VISIBLE);
+            holder.tvReplyUser.setVisibility(View.VISIBLE);
+        }
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
     }
 
@@ -67,41 +78,77 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
     // create ViewHolder class
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivProfileImage;
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvTimestamp;
         public ImageButton ibReply;
+        public TextView tvReply;
+        public TextView tvReplyUser;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             // performs findViewById lookups
-
+            final int REQUEST_CODE = 20;
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
+            ivProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // gets item position
+                    int position = getAdapterPosition();
+                    // make sure the position is valid, i.e. actually exists in the view
+                    if (position != RecyclerView.NO_POSITION) {
+                        // get the tweet at the position, this won't work if the class is static
+                        Tweet tweet = mTweets.get(position);
+                        // create intent for the new activity
+                        Intent intent = new Intent(context, ProfileActivity.class);
+                        intent.putExtra("screen_name", tweet.user.screenName);
+                        // show the activity
+                        context.startActivity(intent);
+                    }
+                }
+            });
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
             ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
-            ibReply.setOnClickListener(this);
-        }
+            ibReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // gets item position
+                    int position = getAdapterPosition();
+                    // make sure the position is valid, i.e. actually exists in the view
+                    if (position != RecyclerView.NO_POSITION) {
+                        // get the tweet at the position, this won't work if the class is static
+                        Tweet tweet = mTweets.get(position);
+                        // create intent for the new activity
+                        Intent intent = new Intent(context, ComposeActivity.class);
+                        intent.putExtra("replyName", tweet.user.name);
+                        intent.putExtra("replyScreenName", tweet.user.screenName);
+                        intent.putExtra("replyID", tweet.uid);
+                        intent.putExtra("createdAt", tweet.createdAt);
+                        // show the activity
+                        ((TimelineActivity) context).startActivityForResult(intent, REQUEST_CODE);
+                    }
+                }
+            });
+            tvReply = (TextView) itemView.findViewById(R.id.tvReply);
+            tvReplyUser = (TextView) itemView.findViewById(R.id.tvReplyUser);
 
-        private final int REQUEST_CODE = 20;
-        @Override
-        public void onClick(View v) {
-            // gets item position
-            int position = getAdapterPosition();
-            // make sure the position is valid, i.e. actually exists in the view
-            if (position != RecyclerView.NO_POSITION) {
-                // get the tweet at the position, this won't work if the class is static
-                Tweet tweet = mTweets.get(position);
-                // create intent for the new activity
-                Intent intent = new Intent(context, ComposeActivity.class);
-                intent.putExtra("screenName", tweet.user.screenName);
-                // show the activity
-                ((TimelineActivity)context).startActivityForResult(intent, REQUEST_CODE);
-            }
+            // handle row click events
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        // get the position of row element
+                        int position = getAdapterPosition();
+                        // fire the listener callback
+                        mListener.onItemSelected(view, position);
+                    }
+                }
+            });
         }
     }
 
@@ -121,5 +168,10 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
         }
 
         return relativeDate;
+    }
+
+    public void clear() {
+        mTweets.clear();
+        notifyDataSetChanged();
     }
 }
