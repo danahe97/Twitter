@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import org.parceler.Parcels;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -68,6 +70,9 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
             holder.tvReply.setVisibility(View.VISIBLE);
             holder.tvReplyUser.setVisibility(View.VISIBLE);
         }
+        if (tweet.favorited) {
+            holder.ivFavorited.setImageResource(R.drawable.ic_heart_filled);
+        }
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
     }
 
@@ -86,6 +91,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
         public ImageButton ibReply;
         public TextView tvReply;
         public TextView tvReplyUser;
+        public ImageView ivFavorited;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -113,6 +119,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
+            ivFavorited = (ImageView) itemView.findViewById(R.id.ivFavorited);
             ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
             ibReply.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -125,10 +132,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
                         Tweet tweet = mTweets.get(position);
                         // create intent for the new activity
                         Intent intent = new Intent(context, ComposeActivity.class);
-                        intent.putExtra("replyName", tweet.user.name);
-                        intent.putExtra("replyScreenName", tweet.user.screenName);
-                        intent.putExtra("replyID", tweet.uid);
-                        intent.putExtra("createdAt", tweet.createdAt);
+                        intent.putExtra("tweet", Parcels.wrap(tweet));
                         // show the activity
                         ((TimelineActivity) context).startActivityForResult(intent, REQUEST_CODE);
                     }

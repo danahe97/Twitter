@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.TweetsListFragment;
 import com.codepath.apps.restclienttemplate.fragments.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -16,15 +17,19 @@ import org.parceler.Parcels;
 
 public class TimelineActivity extends AppCompatActivity implements TweetsListFragment.TweetSelectedListener {
 
+    private ViewPager vpPager;
+    private  TweetsPagerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
         // get the view pager
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        vpPager = (ViewPager) findViewById(R.id.viewpager);
         // set the adapter for the pager
-        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
+        adapter = new TweetsPagerAdapter(getSupportFragmentManager(), this);
+        vpPager.setAdapter(adapter);
         // setup the TabLayout to use the view pager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
@@ -68,12 +73,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             // Extract name value from result extras
-            String name = data.getExtras().getString("name");
-            int code = data.getExtras().getInt("code", 0);
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-//            tweets.add(0, tweet);
-//            tweetAdapter.notifyItemInserted(0);
-//            rvTweets.scrollToPosition(0);
+            HomeTimelineFragment fragment = (HomeTimelineFragment)adapter.getItem(0);
+            fragment.addNewTweet(tweet);
         }
     }
 
@@ -87,11 +89,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     public void onTweetSelected(Tweet tweet) {
         // create intent for the new activity
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("username", tweet.user.name);
-        intent.putExtra("screenName", tweet.user.screenName);
-        intent.putExtra("body", tweet.body);
-        intent.putExtra("createdAt", tweet.createdAt);
-        intent.putExtra("profUrl", tweet.user.profileImageUrl);
+        intent.putExtra("tweet", Parcels.wrap(tweet));
         // show the activity
         this.startActivity(intent);
     }

@@ -53,4 +53,27 @@
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:layout_below="@+id/tvScreenNameDetails"
         android:layout_alignStart="@+id/tvScreenNameDetails" />
+
+    <ImageButton
+        android:id="@+id/ibFavorited"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        android:onClick="favorite"
+        android:scaleType="fitXY"
+        android:tint="@color/medium_red"
+        app:srcCompat="@drawable/ic_heart"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:id="@+id/ibClose"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:tint="@color/medium_gray"
+        app:srcCompat="@drawable/ic_close" />
 </RelativeLayout>
