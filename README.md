@@ -13,23 +13,23 @@ The following **required** functionality is completed:
   * [X] RecyclerView is used to display listings of any tweets
   * [X] User is displayed the username, name, and body for each tweet
   * [X] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
-* [ ] User can **compose and post a new tweet**
+* [X] User can **compose and post a new tweet**
   * [X] User can click a "Compose" icon in the App Bar on the top right
   * [X] User can then enter a new tweet from a second activity and then post this to twitter
-  * [ ] User is taken back to home timeline with new tweet visible in timeline
-  * [ ] Newly created tweet should be manually inserted into the timeline and not rely on a full refresh
+  * [X] User is taken back to home timeline with new tweet visible in timeline
+  * [X] Newly created tweet should be manually inserted into the timeline and not rely on a full refresh
 
 The following **optional** features are implemented:
 
 * [X] While composing a tweet, user can see a character counter with characters remaining for tweet out of 140
 * [ ] User can **pull down to refresh tweets** in either timeline.
-* [ ] Improve the user interface and theme the app to feel twitter branded with colors and styles
+* [X] Improve the user interface and theme the app to feel twitter branded with colors and styles
 * [ ] User can **search for tweets matching a particular query** and see results.
-* [ ] When a network request is sent, user sees an [indeterminate progress indicator](http://guides.codepath.com/android/Handling-ProgressBars#progress-within-actionbar)
+* [X] When a network request is sent, user sees an [indeterminate progress indicator](http://guides.codepath.com/android/Handling-ProgressBars#progress-within-actionbar)
 * [X] User can **"reply" to any tweet on their home timeline**
   * [X] The user that wrote the original tweet is automatically "@" replied in compose
 * [X] User can click on a tweet to be **taken to a "detail view"** of that tweet
- * [ ] User can take favorite (and unfavorite) or retweet actions on a tweet
+ * [X] User can take favorite (and unfavorite) or retweet actions on a tweet
 * [ ] User can see embedded image media within the tweet item in list or detail view.
 * [ ] Compose activity is replaced with a modal compose overlay.
 * [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
