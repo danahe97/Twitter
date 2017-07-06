@@ -31,6 +31,7 @@
         android:text="@string/body"
         android:textColor="@color/black"
         android:layout_below="@+id/tvReplyUser"
+        android:autoLink="all"
         android:layout_toEndOf="@+id/ivProfileImage" />
 
     <TextView
