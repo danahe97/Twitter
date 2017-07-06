@@ -74,6 +74,11 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
             holder.ivFavorited.setImageResource(R.drawable.ic_heart_filled);
         }
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+        if (tweet.imageUrl != null) {
+            holder.ivImage.setVisibility(View.VISIBLE);
+            Glide.with(context).load(tweet.imageUrl).dontAnimate().into(holder.ivImage);
+        }
+        else holder.ivImage.setVisibility(View.GONE);
     }
 
     @Override
@@ -92,6 +97,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
         public TextView tvReply;
         public TextView tvReplyUser;
         public ImageView ivFavorited;
+        public ImageView ivImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -153,6 +159,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
                     }
                 }
             });
+            ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
         }
     }
 
