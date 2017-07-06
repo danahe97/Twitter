@@ -35,7 +35,7 @@ public class UserTimelineFragment extends TweetsListFragment {
         client = TwitterApp.getRestClient();
         populateTimeline();
     }
-    private void populateTimeline() {
+    public void populateTimeline() {
         // comes from activity
         String screenName = getArguments().getString("screen_name");
         client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
