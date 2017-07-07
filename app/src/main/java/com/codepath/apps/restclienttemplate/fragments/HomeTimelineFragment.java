@@ -29,7 +29,8 @@ public class HomeTimelineFragment extends TweetsListFragment {
         client = TwitterApp.getRestClient();
         populateTimeline();
     }
-    private void populateTimeline() {
+    @Override
+    public void populateTimeline() {
         log.d("TwitterClient", "about to call client");
         client.getHomeTimeline(new JsonHttpResponseHandler() {
 

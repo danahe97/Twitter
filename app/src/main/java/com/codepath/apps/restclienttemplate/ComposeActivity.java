@@ -26,6 +26,7 @@ public class ComposeActivity extends AppCompatActivity {
     String replyName;
     String replyUser;
     Long replyID;
+    Boolean reply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +37,18 @@ public class ComposeActivity extends AppCompatActivity {
         tvReplyUser = (TextView) findViewById(R.id.tvReplyUser);
         etNewTweet = (EditText) findViewById(R.id.etNewTweet);
         Intent getI = getIntent();
-        replyName = getI.getStringExtra("replyName");
-        replyUser =getI.getStringExtra("replyScreenName");
-        replyID = getI.getLongExtra("replyID", -1);
-        if (replyID != -1) {
+        reply = getI.getBooleanExtra("replyBool", false);
+        if (reply) {
+            final Tweet tweet = Parcels.unwrap(getI.getParcelableExtra("tweet"));
+            replyName = tweet.user.name;
+            replyUser =tweet.user.screenName;
+            replyID = tweet.uid;
             tvReplyUser.setText(replyName);
             etNewTweet.setText("@" + replyUser);
             tvreply.setVisibility(View.VISIBLE);
             tvReplyUser.setVisibility(View.VISIBLE);
+        } else {
+            replyID = (long)-1;
         }
     }
 

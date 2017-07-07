@@ -33,7 +33,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
     // define an interface required by the viewholder
     public interface TweetAdapterListener {
-        public void onItemSelected (View view, int position);
+        void onItemSelected (View view, int position);
     }
 
     // pass in the Tweets array in the constructor
@@ -139,6 +139,7 @@ public class TweetAdapter extends  RecyclerView.Adapter<TweetAdapter.ViewHolder>
                         // create intent for the new activity
                         Intent intent = new Intent(context, ComposeActivity.class);
                         intent.putExtra("tweet", Parcels.wrap(tweet));
+                        intent.putExtra("replyBool", true);
                         // show the activity
                         ((TimelineActivity) context).startActivityForResult(intent, REQUEST_CODE);
                     }

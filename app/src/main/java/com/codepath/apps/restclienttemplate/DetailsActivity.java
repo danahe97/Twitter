@@ -34,6 +34,7 @@ public class DetailsActivity extends AppCompatActivity {
         String timestamp = getRelativeTimeAgo(createdAt);
         String profUrl = tweet.user.profileImageUrl;
         final long id = tweet.uid;
+        String imageUrl = tweet.imageUrl;
 
         TextView tvUsername = (TextView) findViewById(R.id.tvUsernameDetails);
         TextView tvScreenName = (TextView) findViewById(R.id.tvScreenNameDetails);
@@ -50,6 +51,10 @@ public class DetailsActivity extends AppCompatActivity {
         tvBody.setText(body);
         tvTimestamp.setText(timestamp);
         Glide.with(this).load(profUrl).into(ivProfPicDetails);
+        if (tweet.imageUrl != null) {
+            ImageView ivImageDetails = (ImageView) findViewById(R.id.ivImageDetails);
+            Glide.with(this).load(tweet.imageUrl).dontAnimate().into(ivImageDetails);
+        }
 
         ibFavorited.setOnClickListener(new View.OnClickListener() {
             @Override

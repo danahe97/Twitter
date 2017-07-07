@@ -9,7 +9,7 @@ import org.parceler.Parcel;
  */
 
 @Parcel
-public class Tweet{
+public class Tweet {
 
     // List out the attributes
     public String body;
@@ -19,8 +19,10 @@ public class Tweet{
     public long replyUser;
     public String replyScreenName;
     public Boolean favorited;
+    public String imageUrl;
 
-    public Tweet() {}
+    public Tweet() {
+    }
 
     // deserialize the JSON
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
@@ -33,6 +35,12 @@ public class Tweet{
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.replyScreenName = jsonObject.getString("in_reply_to_screen_name");
         tweet.favorited = jsonObject.getBoolean("favorited");
+        tweet.imageUrl = null;
+        if (jsonObject.getJSONObject("entities").has("media")) {
+            tweet.imageUrl = jsonObject.getJSONObject("entities").getJSONArray("media")
+                    .optJSONObject(0).getString("media_url");
+            //tweet.imageUrl += ":small";
+        }
         return tweet;
     }
 }

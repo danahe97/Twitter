@@ -76,4 +76,12 @@
         android:scaleType="fitXY"
         android:tint="@color/medium_gray"
         app:srcCompat="@drawable/ic_close" />
+
+    <ImageView
+        android:id="@+id/ivImageDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvBodyDetails"
+        app:srcCompat="@android:color/transparent" />
 </RelativeLayout>

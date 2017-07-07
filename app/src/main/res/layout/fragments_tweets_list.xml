@@ -4,13 +4,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--
+
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    -->
+        android:layout_height="match_parent" >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvTweet"
@@ -25,8 +24,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <!--
     </android.support.v4.widget.SwipeRefreshLayout>
-    -->
 
 </LinearLayout>
