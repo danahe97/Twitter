@@ -18,11 +18,22 @@ The following **required** functionality is completed:
   * [X] User can then enter a new tweet from a second activity and then post this to twitter
   * [X] User is taken back to home timeline with new tweet visible in timeline
   * [X] Newly created tweet should be manually inserted into the timeline and not rely on a full refresh
+* [X] User can switch between Timeline and Mention views using tabs. (3 points)
+  * [X] User can view their home timeline tweets.
+  * [X] User can view the recent mentions of their username.
+  * [X] User can compose tweets. See this conceptual guide for passing data into a timeline fragment.
+* [X] User can navigate to view their own profile (2 points)
+  * [X] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+  * [X] The users/verify_credentials endpoint can be used to access this information.
+* [X] User can click on the profile image in any tweet to see another user's profile. (3 points)
+  * [X] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+  * [X] Profile view should include that user's timeline
+  * [X] The users/show endpoint can be used to access this information.
 
 The following **optional** features are implemented:
 
 * [X] While composing a tweet, user can see a character counter with characters remaining for tweet out of 140
-* [ ] User can **pull down to refresh tweets** in either timeline.
+* [X] User can **pull down to refresh tweets** in either timeline.
 * [X] Improve the user interface and theme the app to feel twitter branded with colors and styles
 * [ ] User can **search for tweets matching a particular query** and see results.
 * [X] When a network request is sent, user sees an [indeterminate progress indicator](http://guides.codepath.com/android/Handling-ProgressBars#progress-within-actionbar)
@@ -30,10 +41,10 @@ The following **optional** features are implemented:
   * [X] The user that wrote the original tweet is automatically "@" replied in compose
 * [X] User can click on a tweet to be **taken to a "detail view"** of that tweet
  * [X] User can take favorite (and unfavorite) or retweet actions on a tweet
-* [ ] User can see embedded image media within the tweet item in list or detail view.
+* [X] User can see embedded image media within the tweet item in list or detail view.
 * [ ] Compose activity is replaced with a modal compose overlay.
-* [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
-* [ ] Used Parcelable instead of Serializable leveraging the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler) when passing data between activities.
+* [X] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
+* [X] Used Parcelable instead of Serializable leveraging the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler) when passing data between activities.
 * [ ] Replaced all icon drawables and other static image assets with [vector drawables](http://guides.codepath.com/android/Drawables#vector-drawables) where appropriate.
 * [ ] User can view following / followers list through the profile of a user
 * [ ] Apply the popular Butterknife annotation library to reduce view boilerplate.
